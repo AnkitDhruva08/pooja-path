@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login | PUJAPATH</title>
+  <link rel="stylesheet" href="/css/bootstrap.min.css" />
+  <style>
+    body {
+      background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+    }
+    .card {
+      max-width: 500px;
+      margin: auto;
+      margin-top: 80px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      border-radius: 15px;
+    }
+    .btn-custom {
+      background-color: #4CAF50;
+      color: white;
+    }
+    .btn-custom:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div class="card p-4">
+    <h3 class="text-center mb-3">Login to Your Account</h3>
+
+    <div class="mb-3">
+      <label class="form-label">Email</label>
+      <input id="email" type="email" class="form-control" placeholder="Enter your email" />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Password</label>
+      <input id="password" type="password" class="form-control" placeholder="Enter password" />
+    </div>
+
+    <div class="d-grid">
+      <button class="btn btn-custom" onclick="handleLogin()">Login</button>
+    </div>
+
+    <div id="error" class="text-danger mt-3 text-center"></div>
+  </div>
+
+  <script>
+    async function handleLogin() {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      const errorDiv = document.getElementById("error");
+
+      errorDiv.textContent = "";
+
+      if (!email || !password) {
+        errorDiv.textContent = "Please fill in all fields.";
+        return;
+      }
+
+      try {
+        const res = await fetch("/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          window.location.href = "/";
+        } else {
+          errorDiv.textContent = data.message || "Invalid email or password.";
+        }
+      } catch (err) {
+        errorDiv.textContent = "Server error. Try again later.";
+      }
+    }
+  </script>
+</body>
+</html>
