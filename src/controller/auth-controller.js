@@ -40,6 +40,7 @@ module.exports.user_login_controller = async(req, res, next) => {
     // generate user access token 
     const token = await jwtAccesUtils.generateToken(res, userDetails);
 
+
     const createUserSession = {
         id : userDetails.id,
         name : userDetails.username,
@@ -47,6 +48,9 @@ module.exports.user_login_controller = async(req, res, next) => {
         role : userDetails.role,
         token : token
     }
+
+    // ✅ Set user session
+    req.session.user = createUserSession;
 
     // set user session in redis 
     res.status(200).json({

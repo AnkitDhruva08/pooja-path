@@ -5,11 +5,11 @@ const user_verification = require('../middlware/auth-middleware');
 
 module.exports.user_registration_service = async(reistrationData) => {
     console.log('registrationData in service ====<<<>>>', reistrationData);
-    const hashedPassword = await argon2.hash(reistrationData.password);
-    console.log('hashedPassword ===<<<<>>>', hashedPassword);
+    // const hashedPassword = await argon2.hash(reistrationData.password);
+    // console.log('hashedPassword ===<<<<>>>', hashedPassword);
 
-    const userRegistrationData = {username : reistrationData.name,email : reistrationData.email,
-                                password : hashedPassword, role: reistrationData.role};
+    const userRegistrationData = {username : reistrationData.username,email : reistrationData.email,
+                                password : reistrationData.password, role: reistrationData.role};
 
     console.log('userRegistrationData ====<<<<<>>>', userRegistrationData);
 

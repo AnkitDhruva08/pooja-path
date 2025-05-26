@@ -4,8 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>PUJAPATH - Book Pandit Online</title>
+
+  <!-- Bootstrap CSS -->
+  <link 
+    rel="stylesheet" 
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
+    crossorigin="anonymous" 
+  />
+
   <link rel="stylesheet" href="/css/bootstrap.min.css" />
   <link rel="icon" href="/favicon.ico" />
+
   <style>
     .circle-avatar {
       width: 40px;
@@ -31,7 +41,7 @@
 
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav me-auto">
-          <li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
+          <li class="nav-item"><a class="nav-link active" href="/dashboard">Home</a></li>
           <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
           <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
         </ul>
@@ -46,7 +56,7 @@
         <div class="d-flex align-items-center d-none" id="userProfile">
           <div id="userInitials" class="circle-avatar me-2"></div>
           <span id="userName" class="text-white fw-bold me-2"></span>
-          <a href="/logout" class="btn btn-sm btn-danger">Logout</a>
+          <button class="btn btn-sm btn-danger" onclick="handleLogout()">Logout</button>
         </div>
       </div>
     </div>
@@ -120,26 +130,34 @@
     <p class="mb-0">&copy; 2025 PujaPath. All rights reserved.</p>
   </footer>
 
-  <script src="/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3z8pc4Ph+FZ6GxgAN" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <!-- Bootstrap JS Bundle -->
+  <script 
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
+    crossorigin="anonymous">
+  </script>
 
-
-  <!-- Script to toggle login state -->
+  <!-- User Login/Logout Script -->
   <script>
-    // Simulated user session (replace this logic with server-side session or localStorage/JWT)
-    const user = sessionStorage.getItem("pujapathUser")
-      ? JSON.parse(sessionStorage.getItem("pujapathUser"))
+    const user = localStorage.getItem("pujapathUser")
+      ? JSON.parse(localStorage.getItem("pujapathUser"))
       : null;
 
     if (user) {
+      console.log("User is logged in:", user);
+
       document.getElementById("authButtons").classList.add("d-none");
       document.getElementById("userProfile").classList.remove("d-none");
-      document.getElementById("userInitials").textContent = user.username[0].toUpperCase();
-      document.getElementById("userName").textContent = user.username;
-      console.log('username ==<<>>', user.username)
+      document.getElementById("userInitials").textContent = user.name[0].toUpperCase();
+      document.getElementById("userName").textContent = user.name;
+    } else {
+      console.log("User is NOT logged in.");
+    }
+
+    function handleLogout() {
+      localStorage.removeItem("pujapathUser");
+      window.location.reload();
     }
   </script>
-  
 </body>
 </html>

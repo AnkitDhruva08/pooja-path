@@ -71,6 +71,7 @@
         const data = await res.json();
 
         if (res.ok) {
+          localStorage.setItem("pujapathUser", JSON.stringify(data.data)); 
           window.location.href = "/";
         } else {
           errorDiv.textContent = data.message || "Invalid email or password.";
